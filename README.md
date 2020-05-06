@@ -1,4 +1,4 @@
-# pxt-zjwl-apds9960
+# pxt-apds9960
 
 gesture recognition,apds9960
 

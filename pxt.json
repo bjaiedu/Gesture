@@ -1,14 +1,14 @@
 {
-    "name": "pxt-zjwl-apds9960",
-    "version": "0.0.0",
-    "description": "gesture recognition,apds9960",
+    "name": "pxt-apds9960",
+    "version": "0.0.1",
+    "description": "gesture recognition of apds9960",
     "dependencies": {
         "core": "*",
         "radio": "*"
     },
     "files": [
         "README.md",
-        "apds9960.ts"
+        "Gesture.ts"
     ],
     "testFiles": [
         "test.ts"
