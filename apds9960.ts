@@ -4,9 +4,9 @@ let DEBUG = 0;
 let APDS9960_I2C_ADDR = 0x39
 
 /* Gesture parameters */
-let GESTURE_THRESHOLD_OUT = 10
-let GESTURE_SENSITIVITY_1 = 50
-let GESTURE_SENSITIVITY_2 = 20
+let GESTURE_THRESHOLD_OUT = 30
+let GESTURE_SENSITIVITY_1 = 33
+let GESTURE_SENSITIVITY_2 = 18
 
 /* Error code for returned values */
 let ERROR = 0xFF
