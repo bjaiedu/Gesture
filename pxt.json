@@ -8,7 +8,7 @@
     },
     "files": [
         "README.md",
-        "Gesture.ts"
+        "main.ts"
     ],
     "testFiles": [
         "test.ts"
