@@ -1,4 +1,5 @@
 namespace gesture{
-    let _enable.PON = 0;
-    let num:number = _enable.AEN + _enable.PIEN;
+    export function minuts(a:number, b:number){
+        return (2 * a + b)*(a + 3 * b)；
+    }
 }
