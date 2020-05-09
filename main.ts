@@ -1,12 +1,8 @@
 namespace GestureSensor {
 
-
-
     /** I2C address 0x39 */
 
-    export const APDS9960_I2C_ADDR = 0x39;
-
-
+    const APDS9960_I2C_ADDR = 0x39;
 
     /** I2C Registers */
 
@@ -110,19 +106,17 @@ namespace GestureSensor {
 
     const APDS9960_GFIFO_R = 0xFF;
 
-
-
     enum Direction {
 
         DIR_NONE = 0,
 
-        DIR_LEFT = 1,
+        DIR_UP = 1,
 
-        DIR_RIGHT = 2,
+        DIR_DOWN = 2,
 
-        DIR_UP = 3,
+        DIR_LEFT = 3,
 
-        DIR_DOWN = 4,
+        DIR_RIGHT = 4,
 
         DIR_NEAR = 5,
 
@@ -132,11 +126,9 @@ namespace GestureSensor {
 
     }
 
-
-
     /** ADC gain settings */
 
-    export enum apds9960AGain_t {
+    enum apds9960AGain_t {
 
         APDS9960_AGAIN_1X = 0x00, /**< No gain */
 
@@ -147,8 +139,6 @@ namespace GestureSensor {
         APDS9960_AGAIN_64X = 0x03  /**< 64x gain */
 
     }
-
-
 
     /** Proxmity gain settings */
 
@@ -164,8 +154,6 @@ namespace GestureSensor {
 
     }
 
-
-
     /** Pulse length settings */
 
     enum apds9960PPulseLen_t {
@@ -179,8 +167,6 @@ namespace GestureSensor {
         APDS9960_PPULSELEN_32US = 0xC0  /**< 32uS */
 
     }
-
-
 
     /** LED drive settings */
 
@@ -196,8 +182,6 @@ namespace GestureSensor {
 
     }
 
-
-
     /** LED boost settings */
 
     enum apds9960LedBoost_t {
@@ -212,8 +196,6 @@ namespace GestureSensor {
 
     }
 
-
-
     /** Dimensions */
 
     enum dimensions {
@@ -225,8 +207,6 @@ namespace GestureSensor {
         APGS9960_DIMENSIONS_LEFT_RIGHT = 0x02, // Left/Right dimensions
 
     }
-
-
 
     /** FIFO Interrupts */
 
@@ -242,8 +222,6 @@ namespace GestureSensor {
 
     }
 
-
-
     /** Gesture Gain */
 
     enum GestureGain {
@@ -257,8 +235,6 @@ namespace GestureSensor {
         APDS9960_GGAIN_8 = 0x03, // Gain 8x
 
     }
-
-
 
     /** Pulse Lenghts */
 
@@ -274,9 +250,7 @@ namespace GestureSensor {
 
     }
 
-
-
-    export enum GestureState {
+    enum GestureState {
 
         APDS9960_None = 0x00,    /**< Gesture None*/
 
@@ -289,8 +263,6 @@ namespace GestureSensor {
         APDS9960_RIGHT = 0x04,  /**< Gesture Right */
 
     }
-
-
 
     /** enable 0x80 */
 
@@ -322,8 +294,6 @@ namespace GestureSensor {
 
     let _enable = new enable_type();
 
-
-
     class control {
 
         AGAIN: number;
@@ -338,8 +308,6 @@ namespace GestureSensor {
 
     let _control = new control();
 
-
-
     class config1 {
 
         WLONG: number;
@@ -348,11 +316,7 @@ namespace GestureSensor {
 
     }
 
-
-
     let _config1 = new config1();
-
-
 
     class config2 {
 
@@ -371,8 +335,6 @@ namespace GestureSensor {
     }
 
     let _config2 = new config2();
-
-
 
     class config3 {
 
@@ -400,8 +362,6 @@ namespace GestureSensor {
 
     let _config3 = new config3();
 
-
-
     class gconf1 {
 
         GEXPERS: number;
@@ -420,8 +380,6 @@ namespace GestureSensor {
 
     let _gconf1 = new gconf1();
 
-
-
     class gconf2 {
 
         GWTIME: number;
@@ -436,8 +394,6 @@ namespace GestureSensor {
 
     let _gconf2 = new gconf2();
 
-
-
     class gconf3 {
 
         GDIMS: number;
@@ -447,8 +403,6 @@ namespace GestureSensor {
     }
 
     let _gconf3 = new gconf3();
-
-
 
     class gconf4 {
 
@@ -470,8 +424,6 @@ namespace GestureSensor {
 
     let _gconf4 = new gconf4();
 
-
-
     class gpulse {
 
         GPULSE: number;
@@ -483,8 +435,6 @@ namespace GestureSensor {
     }
 
     let _gpulse = new gpulse();
-
-
 
     class ppulse {
 
@@ -498,8 +448,6 @@ namespace GestureSensor {
 
     let _ppulse = new ppulse();
 
-
-
     class pers {
 
         APERS: number;
@@ -511,8 +459,6 @@ namespace GestureSensor {
     }
 
     let _pers = new pers();
-
-
 
     class status {
 
@@ -552,8 +498,6 @@ namespace GestureSensor {
 
     let _status = new status();
 
-
-
     class gstatus {
 
         GVALID: number;
@@ -571,8 +515,6 @@ namespace GestureSensor {
     }
 
     let _gstatus = new gstatus();
-
-
 
     export class apds9960 {
 
@@ -592,16 +534,6 @@ namespace GestureSensor {
 
         private RCount: number;
 
-
-
-        public value1: number;
-
-        public value2: number;
-
-        public value3: number;
-
-
-
         /** I2C read and write */
 
         private write8(reg: number, value: number): void {
@@ -615,8 +547,6 @@ namespace GestureSensor {
             pins.i2cWriteBuffer(APDS9960_I2C_ADDR, buf, false);
 
         }
-
-
 
         private read(reg: number, num: number): number {
             let pos: number = 0;
@@ -633,59 +563,49 @@ namespace GestureSensor {
             return pos;
         }
 
-
-
         private read8(reg: number): number {
 
             pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
 
-            let buf3: number = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE);
+            let buf3: Buffer = pins.i2cReadBuffer(APDS9960_I2C_ADDR, pins.sizeOf(NumberFormat.UInt8BE), false);
 
-            return buf3;
+            return buf3.getNumber(NumberFormat.UInt8BE, 0);
 
         }
-
-
 
         private read16(reg: number): number {
 
             pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
 
-            let buf4: Buffer = pins.i2cReadBuffer(reg, pins.sizeOf(NumberFormat.UInt16BE), false);
+            let buf4: Buffer = pins.i2cReadBuffer(APDS9960_I2C_ADDR, pins.sizeOf(NumberFormat.UInt16BE), false);
 
             return (buf4[0] << 8) | buf4[1];
 
         }
 
-
-
         private read16R(reg: number): number {
 
             pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
 
-            let buf5: Buffer = pins.i2cReadBuffer(reg, pins.sizeOf(NumberFormat.UInt16BE), false);
+            let buf5: Buffer = pins.i2cReadBuffer(APDS9960_I2C_ADDR, pins.sizeOf(NumberFormat.UInt16BE), false);
 
             return (buf5[1] << 8) | buf5[0];
 
         }
 
-
-
         private read32(reg: number): number {
 
             pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
 
-            let buf6: Buffer = pins.i2cReadBuffer(reg, pins.sizeOf(NumberFormat.UInt32BE), false);
+            let buf6: Buffer = pins.i2cReadBuffer(APDS9960_I2C_ADDR, pins.sizeOf(NumberFormat.UInt32BE), false);
 
             return (buf6[0] << 24) | (buf6[1] << 16) | (buf6[2] << 8) | buf6[3];
 
         }
 
-
-
         /** begin and init */
 
-        init() {
+        resetReg() {
 
             _enable.PON = 1;
 
@@ -702,7 +622,6 @@ namespace GestureSensor {
             _enable.GEN = 1;
 
 
-
             _control.AGAIN = 2;
 
             _control.PGAIN = 2;
@@ -710,9 +629,7 @@ namespace GestureSensor {
             _control.LDRIVE = 2;
 
 
-
             _config1.WLONG = 1;
-
 
 
             _config2.LED_BOOST = 2;
@@ -720,7 +637,6 @@ namespace GestureSensor {
             _config2.CPSIEN = 1;
 
             _config2.PSIEN = 1;
-
 
 
             _config3.PMASK_R = 1;
@@ -736,13 +652,11 @@ namespace GestureSensor {
             _config3.PCMP = 1;
 
 
-
             _gconf1.GEXPERS = 2;
 
             _gconf1.GEXMSK = 4;
 
             _gconf1.GFIFOTH = 2;
-
 
 
             _gconf2.GWTIME = 3;
@@ -752,9 +666,7 @@ namespace GestureSensor {
             _gconf2.GGAIN = 2;
 
 
-
             _gconf3.GDIMS = 2;
-
 
 
             _gconf4.GMODE = 1;
@@ -762,11 +674,9 @@ namespace GestureSensor {
             _gconf4.GIEN = 2;
 
 
-
             _gpulse.GPULSE = 6;
 
             _gpulse.GPLEN = 2;
-
 
 
             _ppulse.PPULSE = 6;
@@ -774,11 +684,9 @@ namespace GestureSensor {
             _ppulse.PPLEN = 2;
 
 
-
             _pers.APERS = 4;
 
             _pers.PPERS = 4;
-
 
 
             _status.AVALID = 1;
@@ -796,31 +704,18 @@ namespace GestureSensor {
             _status.CPSAT = 1;
 
 
-
             _gstatus.GVALID = 1;
 
             _gstatus.GFOV = 1;
 
 
-            this.gestCnt = 0;
-
-            this.UCount = 0;
-
-            this.DCount = 0;
-
-            this.LCount = 0;
-
-            this.RCount = 0;
-
             this.data_buf = pins.createBuffer(256);
 
         }
 
+        begin(iTimeMS: number, aGain: apds9960AGain_t, addr: number): boolean {
 
-
-        begin(iTimeMS: number = 10, aGain: apds9960AGain_t = apds9960AGain_t.APDS9960_AGAIN_4X, addr: number = APDS9960_I2C_ADDR): boolean {
-
-            this.init();
+            this.resetReg();
 
             this._i2caddr = addr;
 
@@ -832,12 +727,9 @@ namespace GestureSensor {
 
             }
 
-
-
             this.setADCIntegrationTime(iTimeMS);
 
             this.setADCGain(aGain);
-
 
 
             this.enableGesture(0);
@@ -847,13 +739,11 @@ namespace GestureSensor {
             this.enableColor(0);
 
 
-
             this.disableColorInterrupt();
 
             this.disableProximityInterrupt();
 
             this.clearInterrupt();
-
 
 
             this.enable(0);
@@ -865,17 +755,15 @@ namespace GestureSensor {
             basic.pause(10);
 
 
-
             this.setGestureDimensions(dimensions.APDS9960_DIMENSIONS_ALL);
 
             this.setGestureFIFOThreshold(FIFOInterrupts.APDS9960_GFIFO_4);
 
-            this.setGestureGain(GestureGain.APDS9960_GGAIN_4);
+            this.setGestureGain(GestureGain.APDS9960_GGAIN_8);
 
             this.setGestureProximityThreshold(50);
 
             this.resetCounts();
-
 
 
             _gpulse.GPLEN = PulseLenghts.APDS9960_GPULSE_32US;
@@ -884,12 +772,9 @@ namespace GestureSensor {
 
             this.write8(APDS9960_GPULSE, _gpulse.get());
 
-
-
             return true;
 
         }
-
 
 
         setADCIntegrationTime(iTimeMS: NumberFormat.UInt16BE): void {
@@ -900,7 +785,7 @@ namespace GestureSensor {
 
             temp /= 2.78;
 
-            temp = Math.round(256 - temp);
+            temp = 256 - temp;
 
             if (temp > 255)
 
@@ -910,11 +795,9 @@ namespace GestureSensor {
 
                 temp = 0;
 
-            this.write8(APDS9960_ATIME, temp);
+            this.write8(APDS9960_ATIME, Math.round(temp));
 
         }
-
-
 
         getADCIntegrationTime(): number {
 
@@ -926,11 +809,9 @@ namespace GestureSensor {
 
             temp2 *= 2.78;
 
-            return Math.round(temp2);
+            return temp2;
 
         }
-
-
 
         setADCGain(aGain: apds9960AGain_t): void {
 
@@ -940,15 +821,11 @@ namespace GestureSensor {
 
         }
 
-
-
         getADCGain(): apds9960AGain_t {
 
             return (this.read8(APDS9960_CONTROL) & 0x03);
 
         }
-
-
 
         setLED(drive: apds9960LedDrive_t, boost: apds9960LedBoost_t): void {
 
@@ -962,11 +839,7 @@ namespace GestureSensor {
 
         }
 
-
-
         /** proximity */
-
-
 
         enableProximity(en: number) {
 
@@ -976,8 +849,6 @@ namespace GestureSensor {
 
         }
 
-
-
         setProxGain(pGain: apds9960PGain_t): void {
 
             _control.PGAIN = pGain;
@@ -986,15 +857,11 @@ namespace GestureSensor {
 
         }
 
-
-
         getProxGain(): apds9960PGain_t {
 
             return (this.read8(APDS9960_CONTROL) & 0x0C);
 
         }
-
-
 
         setProxPulse(pLen: apds9960PPulseLen_t, pulses: number) {
 
@@ -1008,19 +875,13 @@ namespace GestureSensor {
 
             pulses--;
 
-
-
             _ppulse.PPLEN = pLen;
 
             _ppulse.PPULSE = pulses;
 
-
-
             this.write8(APDS9960_PPULSE, _ppulse.get());
 
         }
-
-
 
         enableProximityInterrupt(): void {
 
@@ -1032,8 +893,6 @@ namespace GestureSensor {
 
         }
 
-
-
         disableProximityInterrupt(): void {
 
             _enable.PIEN = 0;
@@ -1042,18 +901,13 @@ namespace GestureSensor {
 
         }
 
-
-
         readProximity(): number { return this.read8(APDS9960_PDATA); }
-
-
 
         setProximityInterruptThreshold(low: number, high: number, persistance: number): void {
 
             this.write8(APDS9960_PILT, low);
 
             this.write8(APDS9960_PIHT, high);
-
 
 
             if (persistance > 7)
@@ -1066,8 +920,6 @@ namespace GestureSensor {
 
         }
 
-
-
         getProximityInterrupt(): number {
 
             _status.set(this.read8(APDS9960_STATUS));
@@ -1076,11 +928,7 @@ namespace GestureSensor {
 
         }
 
-
-
         /** gesture */
-
-
 
         enableGesture(en: number): void {
 
@@ -1100,8 +948,6 @@ namespace GestureSensor {
 
         }
 
-
-
         gestureValid(): number {
 
             _gstatus.set(this.read8(APDS9960_GSTATUS));
@@ -1109,8 +955,6 @@ namespace GestureSensor {
             return _gstatus.GVALID;
 
         }
-
-
 
         setGestureDimensions(dims: number): void {
 
@@ -1120,8 +964,6 @@ namespace GestureSensor {
 
         }
 
-
-
         setGestureFIFOThreshold(thresh: number): void {
 
             _gconf1.GFIFOTH = thresh;
@@ -1129,8 +971,6 @@ namespace GestureSensor {
             this.write8(APDS9960_GCONF1, _gconf1.get());
 
         }
-
-
 
         setGestureGain(gain: number): void {
 
@@ -1140,15 +980,11 @@ namespace GestureSensor {
 
         }
 
-
-
         setGestureProximityThreshold(thresh: number): void {
 
             this.write8(APDS9960_GPENTH, thresh);
 
         }
-
-
 
         setGestureOffset(offset_up: number, offset_down: number, offset_left: number, offset_right: number): void {
 
@@ -1162,8 +998,6 @@ namespace GestureSensor {
 
         }
 
-
-
         readGesture(): number {
 
             let toRead: number;
@@ -1171,8 +1005,6 @@ namespace GestureSensor {
             let bytesRead: number;
 
             let t: number = 0;
-
-            let buf: Buffer;
 
             let gestureReceived: number;
 
@@ -1184,61 +1016,61 @@ namespace GestureSensor {
 
                 gestureReceived = 0;
 
-                if (!this.gestureValid()){return 0;}
-
-                basic.pause(30);
+                if (!this.gestureValid()) {
+                    return 0;
+                }
 
                 toRead = this.read8(APDS9960_GFLVL);
 
                 bytesRead = this.read(APDS9960_GFIFO_U, toRead);
 
-                this.value2 = bytesRead;
-
-                if(Math.abs(Math.round(this.data_buf[0]) - Math.round(this.data_buf[1])) > 13){
-                    up_down_diff += Math.round(this.data_buf[0]) - Math.round(this.data_buf[1]);
+                if (Math.abs(this.data_buf[0] - this.data_buf[1]) > 13) {
+                    up_down_diff += this.data_buf[0] - this.data_buf[1];
                 }
 
-                if (Math.abs(Math.round(this.data_buf[2]) - Math.round(this.data_buf[3])) > 13) {
-                    left_right_diff += Math.round(this.data_buf[0]) - Math.round(this.data_buf[1]);
+                if (Math.abs(this.data_buf[2] - this.data_buf[3]) > 13) {
+                    left_right_diff += this.data_buf[2] - this.data_buf[3];
                 }
 
                 if (up_down_diff != 0) {
                     if (up_down_diff < 0) {
                         if (this.DCount > 0) {
-                            gestureReceived = GestureState.APDS9960_UP;
+                            gestureReceived = Direction.DIR_UP;
                         } else
                             this.UCount++;
                     } else if (up_down_diff > 0) {
                         if (this.UCount > 0) {
-                            gestureReceived = GestureState.APDS9960_DOWN;
+                            gestureReceived = Direction.DIR_DOWN;
                         } else
                             this.DCount++;
                     }
-                } else { return null; }
+                }
 
                 if (left_right_diff != 0) {
                     if (left_right_diff < 0) {
                         if (this.RCount > 0) {
-                            gestureReceived = GestureState.APDS9960_LEFT;
+                            gestureReceived = Direction.DIR_LEFT;
                         } else
                             this.LCount++;
                     } else if (left_right_diff > 0) {
                         if (this.LCount > 0) {
-                            gestureReceived = GestureState.APDS9960_RIGHT;
+                            gestureReceived = Direction.DIR_RIGHT;
                         } else
                             this.RCount++;
                     }
-                } else { return null; }
+                }
 
-                if (up_down_diff != 0 || left_right_diff != 0){
+                if (up_down_diff != 0 || left_right_diff != 0) {
+                    t = input.runningTime();
+                }
+
+                if (gestureReceived || input.runningTime() - t > 300) {
                     this.resetCounts();
                     return gestureReceived;
-                } else{return null; }
-
+                }
             }
+            return Direction.DIR_NONE;
         }
-
-
 
         resetCounts(): void {
 
@@ -1254,11 +1086,7 @@ namespace GestureSensor {
 
         }
 
-
-
         /** light & color */
-
-
 
         enableColor(en: number) {
 
@@ -1268,8 +1096,6 @@ namespace GestureSensor {
 
         }
 
-
-
         colorDataReady(): number {
 
             _status.set(this.read8(APDS9960_STATUS));
@@ -1277,8 +1103,6 @@ namespace GestureSensor {
             return _status.AVALID;
 
         }
-
-
 
         getColorData(r: number, g: number, b: number, c: number) {
 
@@ -1292,8 +1116,6 @@ namespace GestureSensor {
 
         }
 
-
-
         calculateColorTemperature(r: number, g: number, b: number): number {
 
             let X2: number, Y: number, Z: number;
@@ -1305,7 +1127,6 @@ namespace GestureSensor {
             let cct: number;
 
 
-
             X2 = (-0.14282 * r) + (1.54924 * g) + (-0.95641 * b);
 
             Y = (-0.32466 * r) + (1.57837 * g) + (-0.73191 * b);
@@ -1313,32 +1134,24 @@ namespace GestureSensor {
             Z = (-0.68202 * r) + (0.77073 * g) + (0.56332 * b);
 
 
-
             xc = (X2) / (X2 + Y + Z);
 
             yc = (Y) / (X2 + Y + Z);
-
 
 
             /* 3. Use McCamy's formula to determine the CCT    */
 
             n = (xc - 0.3320) / (0.1858 - yc);
 
-
-
             /* Calculate the final CCT */
 
             cct = (449.0 * Math.pow(n, 3)) + (3525.0 * Math.pow(n, 2)) + (6823.3 * n) + 5520.33;
 
-
-
             /* Return the results in degrees Kelvin */
 
-            return cct;
+            return Math.round(cct);
 
         }
-
-
 
         calculateLux(r: number, g: number, b: number) {
 
@@ -1346,11 +1159,9 @@ namespace GestureSensor {
 
             illuminance = (-0.32466 * r) + (1.57837 * g) + (-0.73191 * b);
 
-            return illuminance;
+            return Math.round(illuminance);
 
         }
-
-
 
         enableColorInterrupt(): void {
 
@@ -1360,8 +1171,6 @@ namespace GestureSensor {
 
         }
 
-
-
         disableColorInterrupt(): void {
 
             _enable.AIEN = 0;
@@ -1370,15 +1179,11 @@ namespace GestureSensor {
 
         }
 
-
-
         clearInterrupt(): void {
 
-            this.write8(APDS9960_AICLEAR, 0);   //函数需要修正
+            this.write8(APDS9960_AICLEAR, 0);
 
         }
-
-
 
         setIntLimits(low: number, high: number): void {
 
@@ -1391,8 +1196,6 @@ namespace GestureSensor {
             this.write8(APDS9960_AIHTH, high >> 8);
 
         }
-
-
 
         /** turn on/of elements */
 
@@ -1408,3 +1211,6 @@ namespace GestureSensor {
 
 }
 
+
+
+/**  block 为构建， 释放方法参考 test.ts **/
