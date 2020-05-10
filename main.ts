@@ -2434,7 +2434,7 @@ namespace APDS9960 {
 
      */
 
-    //% blockId="GET_GESTURE_VALUE" block="Gesture"
+    //% blockId="GET_GESTURE_VALUE" block="on Gesture|%gesture"
 
     //% weight=100 color=#000012
 
