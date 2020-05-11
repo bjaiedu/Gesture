@@ -1,6 +1,6 @@
 // % weight=10 color=#9F79EE icon="\uf108" block="手势传感器"
 namespace mytest{
-    enum Direction_type {
+    export enum Direction_type {
         //% block = None
         DIR_NONE = 0,        
         //% block = UP
