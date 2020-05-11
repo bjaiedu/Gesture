@@ -54,20 +54,16 @@ namespace APDS9960 {
     const APDS9960_GFIFO_L = 0xFE;
     const APDS9960_GFIFO_R = 0xFF;
     export enum Direction_type {
-        //% block=None
+        //% block=无
         DIR_NONE = 0,
-        //% block=UP
+        //% block=向上
         DIR_UP = 1,
-        //% block=DOWN
+        //% block=向下
         DIR_DOWN = 2,
-        //% block=LEFT
+        //% block=向左
         DIR_LEFT = 3,
-        //% block=RIGHT
+        //% block=向右
         DIR_RIGHT = 4,
-        //% block=NEAR
-        DIR_NEAR = 5,
-        //% block=FAR
-        DIR_FAR = 6,
     }
 
     export enum ATIME_type {
@@ -656,7 +652,7 @@ namespace APDS9960 {
         }
     }
 
-    //% blockId="GET_GESTURE_VALUE" block="Gesture|%gesture"
+    //% blockId="GET_GESTURE_VALUE" block="手势运动|%gesture"
     //% weight=100 blockGap=16
     export function onGesture(gesture: Direction_type, handler: Action) {
         control.onEvent(gestureEventId, gesture, handler);
