@@ -73,22 +73,16 @@ namespace APDS9960 {
     export enum ATIME_type {
         //% block=2.78ms
         Atime_2_78 = 2.78,
-
         //% block=10ms
         Atime_10 = 10,
-
         //% block=27.8ms
         Atime_27_8 = 27.8,
-
         //% block=20ms
         Atime_20 = 20,
-
         //% block=200ms
         Atime_200 = 200,
-
         //% block=712ms
         Atime_712= 712,
-
     }
     /** ADC gain settings */
     enum apds9960AGain_t {
@@ -137,16 +131,24 @@ namespace APDS9960 {
     }
     /** FIFO Interrupts */
     enum FIFOInterrupts {
+        //% block=GFIGO_1
         APDS9960_GFIFO_1 = 0x00,  // Generate interrupt after 1 dataset in FIFO
+        //% block=GFIFO_4
         APDS9960_GFIFO_4 = 0x01,  // Generate interrupt after 4 datasets in FIFO
+        //% block=GFIFO_8
         APDS9960_GFIFO_8 = 0x02,  // Generate interrupt after 8 datasets in FIFO
+        //% block=GFIFO_16
         APDS9960_GFIFO_16 = 0x03, // Generate interrupt after 16 datasets in FIFO
     }
     /** Gesture Gain */
     enum GestureGain {
+        //% block=GGAIN_1
         APDS9960_GGAIN_1 = 0x00, // Gain 1x
+        //% block=GGAIN_2
         APDS9960_GGAIN_2 = 0x01, // Gain 2x
+        //% block=GGAIN_4
         APDS9960_GGAIN_4 = 0x02, // Gain 4x
+        //% block=GGAIN_8
         APDS9960_GGAIN_8 = 0x03, // Gain 8x
     }
     /** Pulse Lenghts */
@@ -289,7 +291,7 @@ namespace APDS9960 {
         }
     }
     let _gstatus = new gstatus();
-    export class apds9960 {
+    class apds9960 {
         private data_buf: Buffer;
         private gestCnt: number;
         private UCount: number;
@@ -384,17 +386,14 @@ namespace APDS9960 {
             this.data_buf = pins.createBuffer(256);
         }
 
-
-        //% blockId="BEGIAN_GESTURE_INIT" block="初始化屏幕，时间%iTimeMS, 放大倍数%aGin"
-        //% weight=99 blockGap=16
-        begin(iTimeMS: number, aGain: apds9960AGain_t,): boolean {
+        begin(fifoin:FIFOInterrupts, gg:GestureGain): boolean {
             this.resetReg();
             let X: NumberFormat.UInt8BE = this.read8(APDS9960_ID);
             if (X != 0xAB) {
                 return false;
             }
-            this.setADCIntegrationTime(iTimeMS);
-            this.setADCGain(aGain);
+            this.setADCIntegrationTime(10);
+            this.setADCGain(apds9960AGain_t.APDS9960_AGAIN_4X);
 
             this.enableGesture(0);
             this.enableProximity(0);
@@ -410,8 +409,8 @@ namespace APDS9960 {
             basic.pause(10);
 
             this.setGestureDimensions(dimensions.APDS9960_DIMENSIONS_ALL);
-            this.setGestureFIFOThreshold(FIFOInterrupts.APDS9960_GFIFO_4);
-            this.setGestureGain(GestureGain.APDS9960_GGAIN_8);
+            this.setGestureFIFOThreshold(fifoin);
+            this.setGestureGain(gg);
             this.setGestureProximityThreshold(50);
             this.resetCounts();
             _gpulse.GPLEN = PulseLenghts.APDS9960_GPULSE_32US;
@@ -655,19 +654,22 @@ namespace APDS9960 {
     const gestureEventId = 4100;
     let lastGetureValue = Direction_type.DIR_NONE;
     let apds = new apds9960();
-    /**
-     * get gesture
-     */
-    //% blockId="GET_GESTURE_VALUE" block="Gesture|%gesture"
-    //% weight=100 color=#000012
-    export function onGesture(gesture: Direction_type, handler: Action) {
-        control.onEvent(gestureEventId, gesture, handler);
-        if(apds.begin(10, 0x01)){
+
+    //% blockId="SET_GESTURE_INIT" block="Gesture Init FIFOInterrupt|%fifoin GGain|%gg"
+    //% weight=100 blockGap=16
+    export function init_gesture(fifoin:FIFOInterrupts, gg:GestureGain) {
+        if(apds.begin(fifoin, gg)){
             apds.enableProximity(1);
             apds.enableGesture(1);
         }else{
             basic.showIcon(IconNames.No)
         }
+    }
+
+    //% blockId="GET_GESTURE_VALUE" block="Gesture|%gesture"
+    //% weight=100 blockGap=16
+    export function onGesture(gesture: Direction_type, handler: Action) {
+        control.onEvent(gestureEventId, gesture, handler);
         control.inBackground(() => {
             const gestureValue = apds.readGesture();
             if(gestureValue != lastGetureValue){
