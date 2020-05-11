@@ -214,38 +214,38 @@ namespace APDS9960 {
 
 
 
-    enum Direction {
+    enum Direction_type {
 
 
-
+        //% block = None
         DIR_NONE = 0,
 
 
-
+        //% block = UP
         DIR_UP = 1,
 
 
-
+        //% block = DOWN
         DIR_DOWN = 2,
 
 
-
+        //% block = LEFT
         DIR_LEFT = 3,
 
 
-
+        //% block = RIGHT
         DIR_RIGHT = 4,
 
 
-
+        //% block = NEAR
         DIR_NEAR = 5,
 
 
-
+        //% block = FAR
         DIR_FAR = 6,
 
 
-
+        //% block = ALL
         DIR_ALL = 7
 
 
@@ -2072,7 +2072,7 @@ namespace APDS9960 {
 
                         if (this.DCount > 0) {
 
-                            gestureReceived = Direction.DIR_UP;
+                            gestureReceived = Direction_type.DIR_UP;
 
                         } else
 
@@ -2082,7 +2082,7 @@ namespace APDS9960 {
 
                         if (this.UCount > 0) {
 
-                            gestureReceived = Direction.DIR_DOWN;
+                            gestureReceived = Direction_type.DIR_DOWN;
 
                         } else
 
@@ -2100,7 +2100,7 @@ namespace APDS9960 {
 
                         if (this.RCount > 0) {
 
-                            gestureReceived = Direction.DIR_LEFT;
+                            gestureReceived = Direction_type.DIR_LEFT;
 
                         } else
 
@@ -2110,7 +2110,7 @@ namespace APDS9960 {
 
                         if (this.LCount > 0) {
 
-                            gestureReceived = Direction.DIR_RIGHT;
+                            gestureReceived = Direction_type.DIR_RIGHT;
 
                         } else
 
@@ -2140,7 +2140,7 @@ namespace APDS9960 {
 
             }
 
-            return Direction.DIR_NONE;
+            return Direction_type.DIR_NONE;
 
         }
 
@@ -2422,7 +2422,7 @@ namespace APDS9960 {
 
     const gestureEventId = 4100;
 
-    let lastGetureValue = Direction.DIR_NONE;
+    let lastGetureValue = Direction_type.DIR_NONE;
 
     let apds = new apds9960();
 
@@ -2438,7 +2438,7 @@ namespace APDS9960 {
 
     //% weight=100 color=#000012
 
-    export function onGesture(gesture: Direction, handler: () => void) {
+    export function onGesture(gesture: Direction_type, handler: () => void) {
 
         control.onEvent(gestureEventId, gesture, handler);
 
