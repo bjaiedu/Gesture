@@ -1,4 +1,4 @@
-//% weight=10 color=#9F79EE icon="\uf108" block="×ËÊÆ´«¸ÐÆ÷"
+//% weight=10 color=#9F79EE icon="\uf108" block="å§¿åŠ¿ä¼ æ„Ÿå™¨"
 namespace APDS9960 {
     /** I2C address 0x39 */
     const APDS9960_I2C_ADDR = 0x39;
@@ -69,6 +69,27 @@ namespace APDS9960 {
         //% block=FAR
         DIR_FAR = 6,
     }
+
+    export enum ATIME_type {
+        //% block=2.78ms
+        Atime_2_78 = 2.78,
+
+        //% block=10ms
+        Atime_10 = 10,
+
+        //% block=27.8ms
+        Atime_27_8 = 27.8,
+
+        //% block=20ms
+        Atime_20 = 20,
+
+        //% block=200ms
+        Atime_200 = 200,
+
+        //% block=712ms
+        Atime_712= 712,
+
+    }
     /** ADC gain settings */
     enum apds9960AGain_t {
         APDS9960_AGAIN_1X = 0x00, /**< No gain */
@@ -113,9 +134,9 @@ namespace APDS9960 {
     /** FIFO Interrupts */
     enum FIFOInterrupts {
         APDS9960_GFIFO_1 = 0x00,  // Generate interrupt after 1 dataset in FIFO
-        APDS9960_GFIFO_4 = 0x01,  // Generate interrupt after 2 datasets in FIFO
-        APDS9960_GFIFO_8 = 0x02,  // Generate interrupt after 3 datasets in FIFO
-        APDS9960_GFIFO_16 = 0x03, // Generate interrupt after 4 datasets in FIFO
+        APDS9960_GFIFO_4 = 0x01,  // Generate interrupt after 4 datasets in FIFO
+        APDS9960_GFIFO_8 = 0x02,  // Generate interrupt after 8 datasets in FIFO
+        APDS9960_GFIFO_16 = 0x03, // Generate interrupt after 16 datasets in FIFO
     }
     /** Gesture Gain */
     enum GestureGain {
@@ -265,7 +286,6 @@ namespace APDS9960 {
     }
     let _gstatus = new gstatus();
     export class apds9960 {
-        private _i2caddr: number;
         private data_buf: Buffer;
         private gestCnt: number;
         private UCount: number;
@@ -359,31 +379,38 @@ namespace APDS9960 {
             _gstatus.GFOV = 1;
             this.data_buf = pins.createBuffer(256);
         }
-        begin(iTimeMS: number, aGain: apds9960AGain_t, addr: number): boolean {
+
+        //% blockId="BEGIN_GESTURE_INIT" block="Init Gesture|%iTimeMS|%aGain FIFOIn|%fifo|%ggg|%ppl"
+        //% weight=100 color=#000012
+        begin(iTimeMS: number, aGain: apds9960AGain_t, fifo:FIFOInterrupts, ggg:GestureGain, ppl:PulseLenghts): boolean {
             this.resetReg();
-            this._i2caddr = addr;
             let X: NumberFormat.UInt8BE = this.read8(APDS9960_ID);
             if (X != 0xAB) {
                 return false;
             }
             this.setADCIntegrationTime(iTimeMS);
             this.setADCGain(aGain);
+
             this.enableGesture(0);
             this.enableProximity(0);
             this.enableColor(0);
+
             this.disableColorInterrupt();
             this.disableProximityInterrupt();
             this.clearInterrupt();
+
             this.enable(0);
             basic.pause(10);
             this.enable(1);
             basic.pause(10);
+
             this.setGestureDimensions(dimensions.APDS9960_DIMENSIONS_ALL);
-            this.setGestureFIFOThreshold(FIFOInterrupts.APDS9960_GFIFO_4);
-            this.setGestureGain(GestureGain.APDS9960_GGAIN_8);
+            //this.setGestureFIFOThreshold(FIFOInterrupts.APDS9960_GFIFO_4);
+            this.setGestureFIFOThreshold(fifo);
+            this.setGestureGain(ggg);
             this.setGestureProximityThreshold(50);
             this.resetCounts();
-            _gpulse.GPLEN = PulseLenghts.APDS9960_GPULSE_32US;
+            _gpulse.GPLEN = ppl;
             _gpulse.GPULSE = 9; // 10 pulses
             this.write8(APDS9960_GPULSE, _gpulse.get());
             return true;
