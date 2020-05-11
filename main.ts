@@ -131,24 +131,16 @@ namespace APDS9960 {
     }
     /** FIFO Interrupts */
     enum FIFOInterrupts {
-        //% block=GFIGO_1
         APDS9960_GFIFO_1 = 0x00,  // Generate interrupt after 1 dataset in FIFO
-        //% block=GFIFO_4
         APDS9960_GFIFO_4 = 0x01,  // Generate interrupt after 4 datasets in FIFO
-        //% block=GFIFO_8
         APDS9960_GFIFO_8 = 0x02,  // Generate interrupt after 8 datasets in FIFO
-        //% block=GFIFO_16
         APDS9960_GFIFO_16 = 0x03, // Generate interrupt after 16 datasets in FIFO
     }
     /** Gesture Gain */
     enum GestureGain {
-        //% block=GGAIN_1
         APDS9960_GGAIN_1 = 0x00, // Gain 1x
-        //% block=GGAIN_2
         APDS9960_GGAIN_2 = 0x01, // Gain 2x
-        //% block=GGAIN_4
         APDS9960_GGAIN_4 = 0x02, // Gain 4x
-        //% block=GGAIN_8
         APDS9960_GGAIN_8 = 0x03, // Gain 8x
     }
     /** Pulse Lenghts */
@@ -386,14 +378,14 @@ namespace APDS9960 {
             this.data_buf = pins.createBuffer(256);
         }
 
-        begin(fifoin:FIFOInterrupts, gg:GestureGain): boolean {
+        begin(iTimeMS: number, aGain: apds9960AGain_t,): boolean {
             this.resetReg();
             let X: NumberFormat.UInt8BE = this.read8(APDS9960_ID);
             if (X != 0xAB) {
                 return false;
             }
-            this.setADCIntegrationTime(10);
-            this.setADCGain(apds9960AGain_t.APDS9960_AGAIN_4X);
+            this.setADCIntegrationTime(iTimeMS);
+            this.setADCGain(aGain);
 
             this.enableGesture(0);
             this.enableProximity(0);
@@ -409,8 +401,8 @@ namespace APDS9960 {
             basic.pause(10);
 
             this.setGestureDimensions(dimensions.APDS9960_DIMENSIONS_ALL);
-            this.setGestureFIFOThreshold(fifoin);
-            this.setGestureGain(gg);
+            this.setGestureFIFOThreshold(FIFOInterrupts.APDS9960_GFIFO_4);
+            this.setGestureGain(GestureGain.APDS9960_GGAIN_8);
             this.setGestureProximityThreshold(50);
             this.resetCounts();
             _gpulse.GPLEN = PulseLenghts.APDS9960_GPULSE_32US;
@@ -655,10 +647,8 @@ namespace APDS9960 {
     let lastGetureValue = Direction_type.DIR_NONE;
     let apds = new apds9960();
 
-    //% blockId="SET_GESTURE_INIT" block="Gesture Init FIFOInterrupt|%fifoin GGain|%gg"
-    //% weight=100 blockGap=16
-    export function init_gesture(fifoin:FIFOInterrupts, gg:GestureGain) {
-        if(apds.begin(fifoin, gg)){
+    export function init_gesture() {
+        if(apds.begin(10, 0x01)){
             apds.enableProximity(1);
             apds.enableGesture(1);
         }else{
