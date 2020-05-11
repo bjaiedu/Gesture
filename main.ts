@@ -382,7 +382,7 @@ namespace APDS9960 {
 
 
         //% blockId="BEGIAN_GESTURE_INIT" block="初始化屏幕，时间%iTimeMS, 放大倍数%aGin"
-        //% weight=99 blockGap=8
+        //% weight=99 blockGap=16
         begin(iTimeMS: number, aGain: apds9960AGain_t,): boolean {
             this.resetReg();
             let X: NumberFormat.UInt8BE = this.read8(APDS9960_ID);
