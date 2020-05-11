@@ -92,9 +92,13 @@ namespace APDS9960 {
     }
     /** ADC gain settings */
     enum apds9960AGain_t {
+        //% block=1x
         APDS9960_AGAIN_1X = 0x00, /**< No gain */
+        //% block=4x
         APDS9960_AGAIN_4X = 0x01,  /**< 2x gain */
+        //% block=16x
         APDS9960_AGAIN_16X = 0x02, /**< 16x gain */
+        //% block=64x
         APDS9960_AGAIN_64X = 0x03  /**< 64x gain */
     }
     /** Proxmity gain settings */
