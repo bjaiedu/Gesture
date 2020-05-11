@@ -1,5 +1,4 @@
-// % weight=10 color=#9F79EE icon="\uf108"
-// block="姿势传感器"
+// % weight=10 color=#9F79EE icon="\uf108" block="姿势传感器"
 namespace mytest{
 
     enum Direction_type{
