@@ -1,4 +1,4 @@
-// % weight=10 color=#9F79EE icon="\uf108" block="å§¿åŠ¿ä¼ æ„Ÿå™¨"
+// % weight=10 color=#9F79EE icon="\uf108" block="×ËÊÆ´«¸ÐÆ÷"
 namespace mytest{
 
     enum Direction_type{
