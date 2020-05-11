@@ -380,9 +380,10 @@ namespace APDS9960 {
             this.data_buf = pins.createBuffer(256);
         }
 
-        //% blockId="BEGIN_GESTURE_INIT" block="Init Gesture 积分时间|%iTimeMS 放大倍数|%aGain FIFOIn|%fifo 手势放大倍数|%ggg 时间长度|%ppl"
-        //% weight=100 color=#000012
-        begin(iTimeMS: number, aGain: apds9960AGain_t, fifo:FIFOInterrupts, ggg:GestureGain, ppl:PulseLenghts): boolean {
+
+        //% blockId="BEGIAN_GESTURE_INIT" block="初始化屏幕，时间%iTimeMS, 放大倍数%aGin"
+        //% weight=99 blockGap=8
+        begin(iTimeMS: number, aGain: apds9960AGain_t,): boolean {
             this.resetReg();
             let X: NumberFormat.UInt8BE = this.read8(APDS9960_ID);
             if (X != 0xAB) {
@@ -405,12 +406,11 @@ namespace APDS9960 {
             basic.pause(10);
 
             this.setGestureDimensions(dimensions.APDS9960_DIMENSIONS_ALL);
-            //this.setGestureFIFOThreshold(FIFOInterrupts.APDS9960_GFIFO_4);
-            this.setGestureFIFOThreshold(fifo);
-            this.setGestureGain(ggg);
+            this.setGestureFIFOThreshold(FIFOInterrupts.APDS9960_GFIFO_4);
+            this.setGestureGain(GestureGain.APDS9960_GGAIN_8);
             this.setGestureProximityThreshold(50);
             this.resetCounts();
-            _gpulse.GPLEN = ppl;
+            _gpulse.GPLEN = PulseLenghts.APDS9960_GPULSE_32US;
             _gpulse.GPULSE = 9; // 10 pulses
             this.write8(APDS9960_GPULSE, _gpulse.get());
             return true;
@@ -658,7 +658,7 @@ namespace APDS9960 {
     //% weight=100 color=#000012
     export function onGesture(gesture: Direction_type, handler: Action) {
         control.onEvent(gestureEventId, gesture, handler);
-        if(apds.begin(10, 0x01, 0x39)){
+        if(apds.begin(10, 0x01)){
             apds.enableProximity(1);
             apds.enableGesture(1);
         }else{
