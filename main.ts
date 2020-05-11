@@ -380,7 +380,7 @@ namespace APDS9960 {
             this.data_buf = pins.createBuffer(256);
         }
 
-        //% blockId="BEGIN_GESTURE_INIT" block="Init Gesture|%iTimeMS|%aGain FIFOIn|%fifo|%ggg|%ppl"
+        //% blockId="BEGIN_GESTURE_INIT" block="Init Gesture 积分时间|%iTimeMS 放大倍数|%aGain FIFOIn|%fifo 手势放大倍数|%ggg 时间长度|%ppl"
         //% weight=100 color=#000012
         begin(iTimeMS: number, aGain: apds9960AGain_t, fifo:FIFOInterrupts, ggg:GestureGain, ppl:PulseLenghts): boolean {
             this.resetReg();
