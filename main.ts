@@ -642,11 +642,13 @@ namespace APDS9960 {
     const gestureEventId = 4100;
     let lastGetureValue = Direction_type.DIR_NONE;
     let apds = new apds9960();
-
-    export function init_gesture() {
+    //% blockId="SET_GESTURE_INIT" block="初始化手势传感器"
+    //% weight=100 blockGap=1
+    export function Init_apds9960(){
         if(apds.begin(10, 0x01)){
             apds.enableProximity(1);
             apds.enableGesture(1);
+            basic.showIcon(IconNames.Yes)
         }else{
             basic.showIcon(IconNames.No)
         }
@@ -656,6 +658,7 @@ namespace APDS9960 {
     //% weight=100 blockGap=16
     export function onGesture(gesture: Direction_type, handler: Action) {
         control.onEvent(gestureEventId, gesture, handler);
+
         control.inBackground(() => {
             const gestureValue = apds.readGesture();
             if(gestureValue != lastGetureValue){
