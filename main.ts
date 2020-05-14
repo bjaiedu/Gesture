@@ -307,31 +307,29 @@ namespace APDS9960 {
         }
     }
 
-    const gestureEventId = 4100;
-    let lastGetureValue = Direction_type.NONE;
-    let apds = new GestureSensor();
-    //% blockId="SET_GESTURE_INIT" block="初始化手势传感器"
-    //% weight=100 blockGap=13
-    export function Init_apds9960() {
-        if (apds.Init_Gesture()) {
-            apds.enableProximity(1);
-            apds.enableGesture(1);
-            basic.showIcon(IconNames.Yes)
-        } else {
-            basic.showIcon(IconNames.No)
-        }
-    }
+    const gstEventID = 4100;
+    let lastGesture = Direction_type.NONE;
 
     //% blockId="GET_GESTURE_VALUE" block="手势运动|%gesture"
     //% weight=100 blockGap=16
-    export function onGesture(gesture: Direction_type, handler: Action) {
-        control.onEvent(gestureEventId, gesture, handler);
-
-        control.inBackground(() => {
-            const gestureValue = apds.readGesture();
-            if (gestureValue != lastGetureValue) {
-                lastGetureValue = gestureValue;
-                control.raiseEvent(gestureEventId, lastGetureValue)
+    export function onGesture(gesture:Direction_type, handler:Action) {
+        control.onEvent(gstEventID, gesture, handler);
+        let apds = new GestureSensor();
+        if (apds.Init_Gesture()) {
+            apds.enableProximity(1);
+            apds.enableGesture(1);
+            basic.showIcon(IconNames.Yes);
+        } else {
+            basic.showIcon(IconNames.No);
+        }
+        control.inBackground(()=>{
+            const gesture = apds.readGesture();
+            while (true) {
+                if (gesture != lastGesture) {
+                    lastGesture = gesture;
+                    control.raiseEvent(gstEventID, lastGesture);
+                }
+                basic.pause(100);
             }
         })
     }
