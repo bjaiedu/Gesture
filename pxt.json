@@ -8,7 +8,8 @@
     },
     "files": [
         "README.md",
-        "main.ts"
+        "apds9960.ts",
+        "apds9960.cpp"
     ],
     "testFiles": [
         "test.ts"
