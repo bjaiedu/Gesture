@@ -2,19 +2,6 @@
 //#include "MicroBit.h"
 #include "math.h"
 
-enum Direction_type {
-        //% block=无
-        NONE = 0,
-        //% block=向上
-        UP = 1,
-        //% block=向下
-        DOWN = 2,
-        //% block=向左
-        LEFT = 3,
-        //% block=向右
-        RIGHT = 4,
-};
-
 //MicroBit uBit;
 
 //MicroBitI2C i2c(I2C_SDA0, I2C_SCL0);
