@@ -2,7 +2,7 @@
 //#include "MicroBit.h"
 #include "math.h"
 
-enum class Direction_type {
+declare const enum Direction_type {
         //% block=无
         NONE = 0,
         //% block=向上
