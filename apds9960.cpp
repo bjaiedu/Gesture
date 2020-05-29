@@ -15,7 +15,7 @@ enum Direction_type {
 };
 
 //% weight=10 color=#9F79EE icon="\uf108"
-namespace  APDS9960{
+namespace  apds9960{
     /** I2C address 0x39 */
     #define APDS9960_ADDRESS 0x39
     /** I2C Registers */
